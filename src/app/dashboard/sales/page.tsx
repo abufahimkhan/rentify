@@ -1,11 +1,2 @@
-import React from 'react'
-
-type Props = {}
-
-const page = (props: Props) => {
-  return (
-    <div>page</div>
-  )
-}
-
-export default page
+import { redirect } from "next/navigation";
+export default function SalesPage() { redirect("/dashboard"); }

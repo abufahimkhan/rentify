@@ -1,12 +1,2 @@
-import SignupForm from "@/components/auth/SignupForm"
-
-
-type Props = {}
-
-const page = (props: Props) => {
-    return (
-        <SignupForm />
-    )
-}
-
-export default page
+import SignupForm from "@/components/auth/SignupForm";
+export default function SignupPage() { return <SignupForm />; }

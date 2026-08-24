@@ -1,177 +1,24 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import axios from 'axios'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { AlertCircle, LockKeyhole, Mail } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-
-const loginSchema = z.object({
-    email: z.string().email('Please enter a valid email address'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-})
-
-type LoginData = z.infer<typeof loginSchema>
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { Building2, Eye, EyeOff, Home, LockKeyhole, Mail } from "lucide-react";
+import type { Role } from "@/lib/tenant-data";
 
 export default function SigninForm() {
-    const router = useRouter()
-
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginData>({
-        resolver: zodResolver(loginSchema),
-        defaultValues: {
-            email: '',
-            password: '',
-        },
-    })
-
-    const onSubmit = async (data: LoginData) => {
-        try {
-            setLoading(true)
-            setError('')
-
-            console.log('Login Data:', data)
-
-            const response = await axios.post(
-                'http://localhost:3000/api/auth/login',
-                data
-            )
-
-            console.log(response.data)
-
-            localStorage.setItem('token', response.data.token)
-            localStorage.setItem('user', JSON.stringify(response.data.user))
-
-            router.push('/dashboard')
-        } catch (err) {
-            console.error(err)
-
-            if (axios.isAxiosError(err)) {
-                setError(err.response?.data?.message ?? 'Login failed.')
-            } else {
-                setError('Something went wrong.')
-            }
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-muted/20 to-background px-4">
-            <Card className="w-full max-w-md shadow-xl">
-                <CardHeader className="space-y-2 text-center">
-                    <CardTitle className="text-3xl font-bold">
-                        Welcome Back
-                    </CardTitle>
-
-                    <CardDescription>
-                        Login to your Fast Basket account
-                    </CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                    {error && (
-                        <div className="mb-5 flex items-start gap-3 rounded-lg border border-destructive/20 bg-destructive/10 p-4 text-destructive">
-                            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-                            <p className="text-sm">{error}</p>
-                        </div>
-                    )}
-
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="space-y-5"
-                    >
-                        <div className="space-y-2">
-                            <Label htmlFor="email">
-                                Email
-                            </Label>
-
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="you@example.com"
-                                    autoComplete="email"
-                                    className="pl-10"
-                                    {...register('email')}
-                                />
-                            </div>
-
-                            {errors.email && (
-                                <p className="text-sm text-destructive">
-                                    {errors.email.message}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="password">
-                                Password
-                            </Label>
-
-                            <div className="relative">
-                                <LockKeyhole className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    placeholder="••••••••"
-                                    autoComplete="current-password"
-                                    className="pl-10"
-                                    {...register('password')}
-                                />
-                            </div>
-
-                            {errors.password && (
-                                <p className="text-sm text-destructive">
-                                    {errors.password.message}
-                                </p>
-                            )}
-                        </div>
-
-                        <Button
-                            type="submit"
-                            className="w-full"
-                            size="lg"
-                            disabled={loading}
-                        >
-                            {loading ? 'Signing In...' : 'Sign In'}
-                        </Button>
-                    </form>
-
-                    <div className="mt-6 text-center text-sm text-muted-foreground">
-                        Don't have an account?{' '}
-                        <Link
-                            href="/signup"
-                            className="font-medium text-primary hover:underline"
-                        >
-                            Sign Up
-                        </Link>
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
-    )
+  const router = useRouter();
+  const [role, setRole] = useState<Role>("landlord");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setLoading(true); localStorage.setItem("rentify-role", role); window.setTimeout(() => router.push("/dashboard"), 450); }
+  return <main className="auth-shell min-h-dvh bg-[#f2f6f3] p-4 sm:p-7"><div className="mx-auto grid min-h-[calc(100dvh-2rem)] max-w-6xl overflow-hidden rounded-[32px] border border-[#dce6e1] bg-white shadow-[0_24px_70px_rgba(21,65,47,.12)] lg:grid-cols-[.92fr_1.08fr]">
+    <section className="relative hidden overflow-hidden bg-[#126b49] p-12 text-white lg:flex lg:flex-col"><div className="absolute -right-24 -top-24 size-72 rounded-full bg-white/10" /><div className="flex items-center gap-3"><span className="grid size-11 place-items-center rounded-2xl bg-white text-[#126b49]"><Building2 /></span><div><b className="text-xl">RENTIFY</b><p className="text-xs text-white/65">Renting made simple</p></div></div><div className="relative my-auto"><p className="text-sm font-bold uppercase tracking-[.18em] text-emerald-200">One place. Every property.</p><h1 className="mt-5 max-w-md text-4xl font-bold leading-tight">Manage homes and relationships with confidence.</h1><p className="mt-5 max-w-md leading-7 text-white/68">Rent, tenants, flats, bills and conversations—organized for landlords and residents.</p></div><p className="text-xs text-white/45">Secure access for every RENTIFY account</p></section>
+    <section className="flex items-center justify-center p-5 sm:p-10 lg:p-14"><div className="w-full max-w-md"><div className="mb-8 lg:hidden"><span className="flex items-center gap-2 text-xl font-bold text-[#126b49]"><Building2 /> RENTIFY</span></div><p className="text-sm font-bold text-[#168159]">Welcome back</p><h2 className="mt-2 text-3xl font-bold tracking-[-.04em] text-[#15271f]">Sign in to your account</h2><p className="mt-2 text-sm text-[#71847d]">Choose your account type and continue.</p>
+      <div className="mt-7 grid grid-cols-2 gap-2 rounded-2xl bg-[#eef3f0] p-1.5">{(["landlord", "tenant"] as const).map((item) => <button key={item} onClick={() => setRole(item)} className={`flex h-12 items-center justify-center gap-2 rounded-xl text-sm font-bold capitalize transition ${role === item ? "bg-white text-[#126b49] shadow-sm" : "text-[#71847d]"}`}>{item === "landlord" ? <Building2 size={17} /> : <Home size={17} />}{item}</button>)}</div>
+      <form onSubmit={submit} className="mt-7 space-y-5"><AuthField icon={<Mail />} label="Email address" name="email" type="email" placeholder="you@example.com" /><label className="block text-sm font-bold text-[#294139]">Password<div className="relative mt-2"><LockKeyhole className="absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-[#82928b]" /><input required name="password" type={showPassword ? "text" : "password"} className="h-12 w-full rounded-xl border border-[#dce5e1] bg-[#fbfcfb] px-11 text-sm outline-none focus:border-[#168159]" placeholder="••••••••" /><button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#82928b]">{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button></div></label><div className="flex items-center justify-between text-sm"><label className="flex items-center gap-2 text-[#71847d]"><input type="checkbox" className="accent-[#168159]" /> Remember me</label><button type="button" className="font-bold text-[#168159]">Forgot password?</button></div><button disabled={loading} className="h-12 w-full rounded-xl bg-[#168159] font-bold text-white shadow-[0_8px_20px_rgba(22,129,89,.22)] transition hover:bg-[#106d4a] disabled:opacity-70">{loading ? "Signing in..." : `Sign in as ${role}`}</button></form>
+      <p className="mt-7 text-center text-sm text-[#71847d]">New to RENTIFY? <Link href="/signup" className="font-bold text-[#168159]">Create an account</Link></p></div></section>
+  </div></main>;
 }
+
+function AuthField({ icon, label, name, type, placeholder }: { icon: React.ReactNode; label: string; name: string; type: string; placeholder: string }) { return <label className="block text-sm font-bold text-[#294139]">{label}<div className="relative mt-2"><span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#82928b] [&>svg]:size-[18px]">{icon}</span><input required name={name} type={type} className="h-12 w-full rounded-xl border border-[#dce5e1] bg-[#fbfcfb] pl-11 pr-4 text-sm outline-none focus:border-[#168159]" placeholder={placeholder} /></div></label>; }

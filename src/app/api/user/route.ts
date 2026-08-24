@@ -7,7 +7,7 @@ export async function GET(){
         const data = await userListFE.json();
         return NextResponse.json(data);
 
-    }catch(error){
+    }catch{
          console.log("Error fetching user");
     }
 }

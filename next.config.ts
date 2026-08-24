@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["cdn.dummyjson.com"], // allow external product images
+    remotePatterns: [{ protocol: "https", hostname: "cdn.dummyjson.com" }],
   },
   /* config options here */
   reactCompiler: true,

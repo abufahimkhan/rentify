@@ -1,11 +1,5 @@
-import React from 'react'
+import TenantApp from "@/components/tenant-app";
 
-type Props = {}
-
-const page = (props: Props) => {
-  return (
-    <div>page</div>
-  )
+export default function DashboardPage() {
+  return <TenantApp screen="dashboard" />;
 }
-
-export default page

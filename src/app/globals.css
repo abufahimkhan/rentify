@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: "Courier New", monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -123,8 +123,135 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
   html {
     @apply font-sans;
+  }
+}
+
+.tenant-app {
+  font-size: 17px;
+}
+
+.tenant-app .text-sm { font-size: 0.95rem; line-height: 1.5rem; }
+.tenant-app .text-xs { font-size: 0.82rem; line-height: 1.2rem; }
+.tenant-app .text-\[10px\] { font-size: 0.72rem; }
+.tenant-app .text-\[11px\] { font-size: 0.76rem; }
+
+/* RENTIFY navigation */
+.tenant-app > aside,
+.tenant-app nav.fixed {
+  background: #126b49 !important;
+  color: white;
+  border-color: #1f7b59 !important;
+}
+.tenant-app > aside a { color: rgba(255,255,255,.82) !important; }
+.tenant-app > aside a:hover,
+.tenant-app > aside a.bg-\[\#eaf6f0\] { background: rgba(255,255,255,.14) !important; color: white !important; }
+.tenant-app > aside .text-\[\#71847d\],
+.tenant-app > aside .text-\[\#668078\] { color: rgba(255,255,255,.7) !important; }
+.tenant-app nav.fixed a { color: rgba(255,255,255,.72) !important; }
+.tenant-app nav.fixed a .bg-\[\#e4f5ed\] { background: rgba(255,255,255,.16) !important; }
+.tenant-app nav.fixed a.text-\[\#118057\] { color: white !important; }
+.sidebar-toggle { color: rgba(255,255,255,.78); background: rgba(255,255,255,.08); }
+.sidebar-toggle:hover { background: rgba(255,255,255,.15); color: white; }
+.header-sidebar-toggle { color: #567067; transition: transform .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.header-sidebar-toggle:hover { transform: translateY(-1px); border-color: #8db9a5; background: #f2f8f5; color: #126b49; box-shadow: 0 6px 16px rgba(19,89,61,.1); }
+.header-sidebar-toggle:active { transform: scale(.94); }
+.tenant-action { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border-radius: .7rem; color: #647a70; transition: .18s ease; }
+.tenant-action:hover { background: #eaf6f0; color: #126b49; }
+.tenant-action.danger:hover { background: #fff0ef; color: #dc4f45; }
+.account-menu-item { display: flex; align-items: center; gap: .65rem; border-radius: .7rem; padding: .65rem .75rem; font-size: .82rem; font-weight: 700; color: #425c51 !important; transition: .16s ease; }
+.account-menu-item:hover { background: #eef7f2 !important; color: #126b49 !important; }
+.account-menu-item.danger { color: #c94e47 !important; }
+.account-menu-item.danger:hover { background: #fff0ef !important; color: #b93b35 !important; }
+
+.role-switch {
+  background: rgba(5, 44, 30, .28);
+  border: 1px solid rgba(255,255,255,.13);
+}
+.role-switch button { color: rgba(255,255,255,.76) !important; }
+.role-switch button.active {
+  background: #fff !important;
+  color: #126b49 !important;
+  box-shadow: 0 2px 8px rgba(5,35,24,.18);
+}
+header .role-switch {
+  background: #edf2ef;
+  border-color: #e1e8e4;
+}
+header .role-switch button { color: #667a71 !important; }
+header .role-switch button.active { color: #126b49 !important; }
+
+.rent-collection-card {
+  color: #eaf8f1;
+  background: linear-gradient(145deg, rgba(5,52,35,.55), rgba(7,62,42,.3));
+  border-color: rgba(255,255,255,.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 12px 28px rgba(4,40,27,.16);
+}
+.rent-collection-card > p:not(.font-bold) { color: rgba(234,248,241,.68); }
+.rent-collection-icon { background: rgba(255,255,255,.12); color: #9be3bd; }
+.rent-collection-value { color: #fff; }
+.rent-collection-track { background: rgba(255,255,255,.16); }
+.rent-collection-progress { background: #67d09a; box-shadow: 0 0 12px rgba(103,208,154,.25); }
+
+/* Persisted light and dark themes */
+.tenant-app.dark-mode { background: #171b19 !important; color: #d7ded9 !important; }
+.tenant-app.dark-mode header,
+.tenant-app.dark-mode .bg-white { background-color: #202622 !important; border-color: #39423d !important; }
+.tenant-app.dark-mode header { background-color: rgba(27,32,29,.95) !important; border-color: #39423d !important; }
+.tenant-app.dark-mode nav.fixed { background-color: #1a211d !important; border-color: #39423d !important; }
+.tenant-app.dark-mode > aside { background: #1a211d !important; border-color: #39423d !important; }
+.tenant-app.dark-mode [class*="bg-[#f"],
+.tenant-app.dark-mode [class*="bg-[#e9"],
+.tenant-app.dark-mode [class*="bg-[#edf"] { background-color: #1b211d !important; }
+.tenant-app.dark-mode [class*="border-[#e"],
+.tenant-app.dark-mode [class*="border-[#d"] { border-color: #39423d !important; }
+.tenant-app.dark-mode [class*="text-[#1"],
+.tenant-app.dark-mode [class*="text-[#2"] { color: #d7ded9 !important; }
+.tenant-app.dark-mode [class*="text-[#6"],
+.tenant-app.dark-mode [class*="text-[#7"],
+.tenant-app.dark-mode [class*="text-[#8"],
+.tenant-app.dark-mode [class*="text-[#9"] { color: #aab5ae !important; }
+.tenant-app.dark-mode .text-white { color: #dce4df !important; }
+.tenant-app.dark-mode [class*="text-white/"] { color: #aeb9b2 !important; }
+.tenant-app.dark-mode input,
+.tenant-app.dark-mode textarea { background: #1a1f1c !important; border-color: #414b45 !important; color: #d7ded9 !important; }
+.tenant-app.dark-mode select { background: #1a1f1c; border-color: #414b45; color: #d7ded9; }
+.tenant-app.dark-mode .header-sidebar-toggle { background: #252c28 !important; color: #b7c2bb; border-color: #414b45 !important; }
+.tenant-app.dark-mode .tenant-action:hover { background: #29342e; color: #73c99f; }
+.tenant-app.dark-mode .account-menu { background: #242a26 !important; border-color: #414b45 !important; color: #d7ded9 !important; }
+.tenant-app.dark-mode .account-menu-item { color: #b9c4bd !important; }
+.tenant-app.dark-mode .account-menu-item:hover { background: #303a34 !important; color: #85d5ad !important; }
+.tenant-app.dark-mode header .role-switch {
+  background: #252c28;
+  border-color: #414b45;
+}
+.tenant-app.dark-mode header .role-switch button { color: #a2aca6 !important; }
+.tenant-app.dark-mode header .role-switch button.active {
+  background: #267b57 !important;
+  color: white !important;
+  box-shadow: none;
+}
+.tenant-app.dark-mode > aside .role-switch button.active {
+  background: #267b57 !important;
+  color: white !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.24);
+}
+.tenant-app.dark-mode .rent-collection-card {
+  background: linear-gradient(145deg, #242c27, #1e2521) !important;
+  border-color: #3a463f !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+}
+.tenant-app.dark-mode .rent-collection-icon { background: rgba(56,181,126,.12); color: #65d39b; }
+.tenant-app.dark-mode .rent-collection-track { background: #343d38; }
+
+@layer components {
+  .primary-btn {
+    @apply inline-flex h-11 items-center gap-2 rounded-xl bg-[#168159] px-4 text-sm font-bold text-white shadow-[0_5px_14px_rgba(22,129,89,.2)] transition hover:bg-[#106d4a];
+  }
+  .secondary-btn {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#dfe7e3] bg-white px-4 text-sm font-bold text-[#294139] transition hover:border-[#afcfc0];
   }
 }
